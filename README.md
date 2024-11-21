@@ -1,5 +1,5 @@
 # dadjokes
-A dad jokes API in Python with FastAPI
+A dad jokes page in Python with WSGI
 
 NOTES:
 When getting the dev environment up and running, re-launch the virtual environment...
