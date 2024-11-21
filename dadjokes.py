@@ -1,7 +1,7 @@
 import sqlite3
 
 def random_joke():
-    conn = sqlite3.connect("/home/willyyam/python/dadjokes/jokes.db")
+    conn = sqlite3.connect("jokes.db")
     cursor = conn.cursor()
     cursor.execute("select setup, punchline, tags from jokes order by random() limit 1")
 
@@ -14,7 +14,7 @@ def random_joke():
 
 
 def get_joke(id=69):
-    conn = sqlite3.connect("/home/willyyam/python/dadjokes/jokes.db")
+    conn = sqlite3.connect("jokes.db")
     cursor = conn.cursor()
     cursor.execute("select setup, punchline, tags from jokes where id = ?", (id,))
 
