@@ -52,6 +52,7 @@ body {{
 .setup {{
   background-color: white;
   font-size: 3vw;
+  font-size: clamp(50px,3vw,200px)
   color: black;
   font-family: sans serif;
   padding: 2rem;
