@@ -23,6 +23,7 @@ def slurp(csv_filename):
 
 def makeTable(db_name, header):
     conn = sqlite3.connect(db_name+".db")
+    conn.execute('pragma journal_mode=wal')
     cursor = conn.cursor()
     table_creation_string = f"create table {db_name} (id integer primary key"
     for column in header:
