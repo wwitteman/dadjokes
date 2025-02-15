@@ -54,7 +54,7 @@ body {{
 .setup {{
   background-color: white;
   font-size: 3vw;
-  font-size: clamp(50px,3vw,200px)
+  font-size: clamp(2rem,3vw,3vw);
   color: black;
   font-family: sans serif;
   padding: 2rem;
@@ -63,6 +63,7 @@ body {{
 .punchline {{
   background-color: white;
   font-size: 3vw;
+  font-size: clamp(2rem,3vw,3vw);
   color: black;
   font-family: sans serif;
   padding: 2rem;
