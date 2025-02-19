@@ -96,7 +96,6 @@ def get_default_joke():
 
 def application(environ, start_response):
     qstring = environ.get("QUERY_STRING")
-    html = ""
     status = '200 OK'
 
     if qstring:
@@ -107,7 +106,7 @@ def application(environ, start_response):
                 html = plainpage(this_joke[0][0],this_joke[0][1])
     else:
         joke = random_joke()
-        html = plainpage(joke[0][0],joke[0][1])
+        html = plainpage(joke)
 
     output = html.encode("utf-8")
  
