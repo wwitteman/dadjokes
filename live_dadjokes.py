@@ -1,8 +1,7 @@
 import json
 import sqlite3
-from urllib.parse import parse_qs
 
-DBPATH = "/www/db/jokes.db"
+DBPATH = "jokes.db"
 
 def random_joke():
     conn = sqlite3.connect(DBPATH)
@@ -35,8 +34,6 @@ def jsonjoke(joke):
     punchline = joke[0][1]
     tags = joke[0][2]
     all_tags = tags.split("#")
-    all_tags = list(filter(None, all_tags))
-    all_tags = ["#"+x for x in all_tags]
     tmp_dict = {"setup":setup,"punchline":punchline,"tags":all_tags}
     my_joke_in_json = json.dumps(tmp_dict)
 
@@ -115,30 +112,15 @@ def get_default_joke():
 def application(environ, start_response):
     qstring = environ.get("QUERY_STRING")
     status = '200 OK'
-    parsed_qs = parse_qs(qstring)
+    html = ""
 
-    if parsed_qs:
-        if "id" in parsed_qs:
-            if int(parsed_qs["id"][0]):
-                this_joke = get_joke(int(parsed_qs["id"][0]))
-            else:
-                this_joke = random_joke()
-        else:
-            this_joke = random_joke()
 
-        if "json" in parsed_qs and parsed_qs["json"][0] == "1":
-            # The output will be JSON, not HTML
-            myjson = jsonjoke(this_joke)
-            output = myjson.encode("utf-8")
-
-            response_headers = [('Content-Type', 'application/json'),
-                ('Content-Length', str(len(output)))]
-            start_response(status, response_headers)
-            
-            return [output]
-        else:
-            # The output will be HTML
-            html = plainpage(this_joke)
+    if qstring:
+        key, value = qstring.split("=")
+        if key == "id":
+            if int(value):
+                this_joke = get_joke(int(value))
+                html = plainpage(this_joke)
     else:
         joke = random_joke()
         html = plainpage(joke)
