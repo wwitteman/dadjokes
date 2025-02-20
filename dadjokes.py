@@ -46,6 +46,20 @@ def jsonjoke(joke):
 def plainpage(the_joke):
     setup = the_joke[0][0]
     punchline = the_joke[0][1]
+    tags = the_joke[0][2]
+    all_tags = tags.split("#")
+    all_tags = list(filter(None, all_tags))
+    all_tags = ["#"+x for x in all_tags]
+    if len(all_tags) < 1:
+        mytags = ""
+    elif len(all_tags) == 1:
+        mytags = f"""<div class="tags">{all_tags[0]}</div>"""
+    else:
+        tag_column = ""
+        for individual_tag in all_tags:
+            tag_column += individual_tag + "<br />"
+        mytags = f"""<div class="tags">{tag_column}</div>"""
+
     html = f"""<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -87,6 +101,15 @@ body {{
   padding-top: 2rem;
   padding-left: 2rem;
 }}
+.tags {{
+  background-color: white;
+  font-size: 1.5vw;
+  color: grey;
+  font-family: sans serif;
+  padding: 1rem;
+  padding-left: 2rem;
+  text-align: right;
+}}
 </style>
 </head>
 <body>
@@ -98,6 +121,7 @@ body {{
 <div class="punchline">
     {punchline}
 </div>
+{mytags}
 </div>
 
 </body>
@@ -142,6 +166,17 @@ def application(environ, start_response):
     else:
         joke = random_joke()
         html = plainpage(joke)
+
+
+    #if qstring:
+    #    key, value = qstring.split("=")
+    #    if key == "id":
+    #        if int(value):
+    #            this_joke = get_joke(int(value))
+    #            html = plainpage(this_joke)
+    #else:
+    #    joke = random_joke()
+    #    html = plainpage(joke)
 
     output = html.encode("utf-8")
  
